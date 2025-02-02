@@ -13,7 +13,7 @@ request.content_type = "application/json"
         ask = gets.chomp
 request["Authorization"] = "Bearer #{api_key['token_openrouter']}"
 request.body = JSON.dump({
-  "model" => "deepseek/deepseek-r1-distill-llama-70b",
+  "model" => "deepseek/deepseek-r1-distill-qwen-32b",
   "messages" => [
     {
       "role" => "user",
