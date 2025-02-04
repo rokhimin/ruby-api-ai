@@ -6,29 +6,30 @@ require 'yaml'
 api_key = YAML.load_file('data.yml')
 
 loop do
-uri = URI.parse("https://openrouter.ai/api/v1/chat/completions")
-request = Net::HTTP::Post.new(uri)
-request.content_type = "application/json"
-        puts "<Ask Liquid AI>"
-        ask = gets.chomp
-request["Authorization"] = "Bearer #{api_key['token_openrouter']}"
-request.body = JSON.dump({
-  "model" => "liquid/lfm-7b",
-  "messages" => [
-    {
-      "role" => "user",
-      "content" => "#{ask}"
-    }
-  ]
-})
+  uri = URI.parse("https://openrouter.ai/api/v1/chat/completions")
+  request = Net::HTTP::Post.new(uri)
+  request.content_type = "application/json"
+          puts "<Ask Liquid AI>"
+          ask = gets.chomp
+          
+  request["Authorization"] = "Bearer #{api_key['token_openrouter']}"
+  request.body = JSON.dump({
+    "model" => "liquid/lfm-7b",
+    "messages" => [
+      {
+        "role" => "user",
+        "content" => "#{ask}"
+      }
+    ]
+  })
 
-req_options = {
-  use_ssl: uri.scheme == "https",
-}
+  req_options = {
+    use_ssl: uri.scheme == "https",
+  }
 
-response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-  http.request(request)
-end
+  response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+    http.request(request)
+  end
 
       load = JSON.parse(response.body)
      
